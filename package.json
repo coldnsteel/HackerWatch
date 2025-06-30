@@ -26,6 +26,10 @@
     "fortress",
     "ai-powered",
     "pwa",
+    "payments",
+    "stripe",
+    "email-deletion",
+    "sms-deletion",
     "ψΩ§∞"
   ],
   "author": "GRSMFC - ψΩ§∞ Cosmic Harmony",
@@ -37,7 +41,11 @@
   "homepage": "https://coldnsteel.github.io/MyWebsite/",
   "dependencies": {
     "express": "^4.18.2",
-    "ws": "^8.14.0"
+    "ws": "^8.14.0",
+    "stripe": "^13.11.0",
+    "googleapis": "^126.0.1",
+    "imap-simple": "^5.2.0",
+    "textmagic-rest-client": "^2.0.1312"
   },
   "engines": {
     "node": ">=14.0.0",
