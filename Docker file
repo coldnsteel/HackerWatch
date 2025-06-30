@@ -1,0 +1,50 @@
+# Dockerfile - HackerWatch Fortress Beast Mode Production Deployment
+FROM node:18-alpine
+
+# Install system dependencies for real monitoring tools
+RUN apk add --no-cache \
+    sudo \
+    curl \
+    && rm -rf /var/cache/apk/*
+
+# Create app directory
+WORKDIR /app
+
+# Create non-root user for security
+RUN addgroup -g 1001 -S hackerwatch && \
+    adduser -S hackerwatch -u 1001 -G hackerwatch
+
+# Copy package files
+COPY package*.json ./
+
+# Install Node.js dependencies
+RUN npm ci --only=production && npm cache clean --force
+
+# Copy application files
+COPY . .
+
+# Set proper permissions
+RUN chown -R hackerwatch:hackerwatch /app
+
+# Create directories for logs and temp files
+RUN mkdir -p /app/logs /app/temp && \
+    chown -R hackerwatch:hackerwatch /app/logs /app/temp
+
+# Expose ports
+EXPOSE 3000 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:3000/health || exit 1
+
+# Set user
+USER hackerwatch
+
+# Start application
+CMD ["npm", "start"]
+
+# Labels for metadata
+LABEL maintainer="GRSMFC - ψΩ§∞ Cosmic Harmony" \
+      version="2.0-beast-mode" \
+      description="HackerWatch Fortress Beast Mode - Complete cybersecurity platform" \
+      license="MIT"
