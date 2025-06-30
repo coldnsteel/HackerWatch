@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>HackerWatch Fortress - Mobile ψΩ§∞ Protocol</title>
-    <meta name="description" content="Universal real-time threat detection - Desktop & Mobile ready">
+    <meta name="description" content="Universal real-time threat detection with payments and secure deletion">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#00ff00">
     <link rel="manifest" href="manifest.json">
     
-    <!-- Security Headers - Fixed CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self' ws: wss: http: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+    <!-- Stripe.js for payments -->
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- Security Headers - Enhanced for payments -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com; connect-src 'self' ws: wss: https://api.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
     
     <style>
         * { 
@@ -122,6 +125,13 @@
             border-color: #ff3333;
         }
         
+        .red-led.payment-alert {
+            background: #00ff00;
+            box-shadow: 0 0 35px rgba(0, 255, 0, 1);
+            animation: mobilePaymentFlash 0.3s infinite alternate;
+            border-color: #00cc00;
+        }
+        
         @keyframes mobilePineappleFlash {
             0% { opacity: 1; transform: scale(1); }
             100% { opacity: 0.4; transform: scale(1.1); }
@@ -135,6 +145,11 @@
         @keyframes mobileIntrusionFlash {
             0% { opacity: 1; transform: scale(1); }
             100% { opacity: 0.3; transform: scale(1.15); }
+        }
+        
+        @keyframes mobilePaymentFlash {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.7; transform: scale(1.05); }
         }
         
         .threat-counter {
@@ -230,6 +245,82 @@
             background: #00ff00;
             color: #000;
             transform: scale(0.95);
+        }
+        
+        /* BEAST MODE: Payment Module Styles */
+        .payment-module {
+            background: rgba(0, 255, 0, 0.08);
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            padding: clamp(12px, 4vw, 15px);
+            margin-bottom: clamp(15px, 4vw, 20px);
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .payment-module.processing {
+            border-color: #ffaa00;
+            background: rgba(255, 170, 0, 0.1);
+            animation: paymentPulse 1s infinite;
+        }
+        
+        .payment-module.success {
+            border-color: #00ff00;
+            background: rgba(0, 255, 0, 0.2);
+        }
+        
+        .payment-module.error {
+            border-color: #ff0000;
+            background: rgba(255, 0, 0, 0.1);
+        }
+        
+        @keyframes paymentPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .payment-form h4 {
+            color: #00ff00;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+        }
+        
+        .card-element-container {
+            padding: 10px;
+            border: 1px solid #00ff00;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.8);
+            margin-bottom: 10px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .payment-message {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: clamp(0.7rem, 3vw, 0.9rem);
+            min-height: 20px;
+        }
+        
+        .payment-message.success {
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+            border: 1px solid #00ff00;
+        }
+        
+        .payment-message.error {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff0000;
+            border: 1px solid #ff0000;
+        }
+        
+        .payment-message.info {
+            background: rgba(255, 255, 0, 0.1);
+            color: #ffff00;
+            border: 1px solid #ffff00;
         }
         
         .monitor-grid {
@@ -380,6 +471,21 @@
             margin-right: 4px;
         }
         
+        .threat-type.payment {
+            color: #00ff00;
+            background: rgba(0, 255, 0, 0.2);
+        }
+        
+        .threat-type.email {
+            color: #0099ff;
+            background: rgba(0, 153, 255, 0.2);
+        }
+        
+        .threat-type.sms {
+            color: #ff9900;
+            background: rgba(255, 153, 0, 0.2);
+        }
+        
         .threat-severity {
             float: right;
             font-size: clamp(0.5rem, 2vw, 0.7rem);
@@ -449,6 +555,15 @@
             background: linear-gradient(135deg, #cc0000, #990000);
         }
         
+        .control-button.payment {
+            background: linear-gradient(135deg, #0099ff, #0066cc);
+            color: #fff;
+        }
+        
+        .control-button.payment:active {
+            background: linear-gradient(135deg, #0088cc, #005599);
+        }
+        
         .control-button.active {
             background: linear-gradient(135deg, #ffaa00, #ff8800);
             color: #000;
@@ -467,667 +582,3 @@
             transform: translateX(-50%);
             display: flex;
             gap: 8px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 8px 12px;
-            border-radius: 20px;
-            border: 1px solid #00ff00;
-            z-index: 1000;
-        }
-        
-        .shortcut-btn {
-            background: rgba(0, 255, 0, 0.2);
-            border: 1px solid #00ff00;
-            color: #00ff00;
-            padding: 6px 10px;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            touch-action: manipulation;
-        }
-        
-        .shortcut-btn:active {
-            background: #00ff00;
-            color: #000;
-            transform: scale(0.9);
-        }
-        
-        @media (min-width: 768px) {
-            .mobile-shortcuts {
-                display: none;
-            }
-        }
-        
-        @media (orientation: landscape) and (max-height: 500px) {
-            .fortress-container {
-                margin-top: 60px;
-            }
-            .fortress-header {
-                padding: 10px 0;
-            }
-            .fortress-title {
-                font-size: clamp(1.2rem, 6vw, 2rem);
-            }
-            .threat-log {
-                max-height: 200px;
-            }
-        }
-        
-        .matrix-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.06;
-        }
-        
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-        
-        .control-button:focus,
-        .shortcut-btn:focus,
-        .red-led:focus {
-            outline: 2px solid #00ff00;
-            outline-offset: 2px;
-        }
-    </style>
-</head>
-<body>
-    <div class="connection-status" id="connectionStatus">CONNECTING...</div>
-    
-    <div class="alert-system">
-        <div class="red-led" id="redLED" onclick="showThreatDetails()" tabindex="0" role="button" aria-label="Threat Alert Display">🚨</div>
-        <div class="threat-counter" id="threatCounter">0 THREATS</div>
-        <div class="live-indicator" id="liveIndicator">LIVE</div>
-    </div>
-    
-    <div class="fortress-container">
-        <header class="fortress-header">
-            <h1 class="fortress-title">🛡️ HACKERWATCH FORTRESS</h1>
-            <div class="status-bar">
-                <span id="systemStatus" class="status-secure">🟢 MOBILE ψΩ§∞ PROTECTION</span>
-                <span id="backendStatus">📡 BACKEND: CONNECTING</span>
-                <span id="threatLevel">⚡ THREAT: MINIMAL</span>
-            </div>
-            
-            <nav class="mobile-nav">
-                <a href="index.html">🏛️ GRSMFC</a>
-                <a href="blog.html">📝 Blog</a>
-                <a href="https://coldnsteel.github.io/KOZMIC-KASINO-/">🎰 Kasino</a>
-                <a href="https://coldnsteel.github.io/comedy-lounge-jokebox/">🎤 Jokebox</a>
-            </nav>
-        </header>
-
-        <div class="monitor-grid">
-            <div class="monitor-module" id="pineappleModule">
-                <div class="module-header">
-                    🥥 WiFi Pineapple Detector
-                    <span class="module-status">LIVE</span>
-                </div>
-                <div class="monitor-status status-safe">
-                    🎯 Rogue APs: <span id="rogueCount">0</span>
-                </div>
-                <div class="monitor-status status-safe">
-                    🎭 Evil Twins: <span id="evilTwinCount">0</span>
-                </div>
-                <div class="monitor-status status-safe">
-                    📡 Range: <span>100m</span>
-                </div>
-            </div>
-
-            <div class="monitor-module" id="bluetoothModule">
-                <div class="module-header">
-                    📶 Bluetooth Radar
-                    <span class="module-status">LIVE</span>
-                </div>
-                <div class="monitor-status status-safe">
-                    📩 BlueJacking: <span id="blueJackCount">0</span>
-                </div>
-                <div class="monitor-status status-safe">
-                    🎣 BlueSnarfing: <span id="blueSnarfCount">0</span>
-                </div>
-                <div class="monitor-status status-safe">
-                    🐛 BlueBugging: <span id="blueBugCount">0</span>
-                </div>
-            </div>
-
-            <div class="monitor-module" id="intrusionModule">
-                <div class="module-header">
-                    🔍 Network Monitor
-                    <span class="module-status">LIVE</span>
-                </div>
-                <div class="monitor-status status-safe">
-                    🔍 Port Scans: <span id="portScanCount">0</span>
-                </div>
-                <div class="monitor-status status-safe">
-                    🔄 ARP Spoofing: <span id="arpCount">0</span>
-                </div>
-                <div class="monitor-status status-safe">
-                    🌐 DNS Hijacking: <span id="dnsCount">0</span>
-                </div>
-            </div>
-
-            <div class="monitor-module" id="systemModule">
-                <div class="module-header">
-                    🛡️ System Guardian
-                    <span class="module-status">LIVE</span>
-                </div>
-                <div class="monitor-status status-safe">
-                    🔗 Connection: <span id="connectionState">CONNECTING</span>
-                </div>
-                <div class="monitor-status status-safe">
-                    ⚡ Real-Time: <span id="realtimeMode">READY</span>
-                </div>
-                <div class="monitor-status status-safe">
-                    ⏱️ Uptime: <span id="uptime">00:00:00</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="threat-log">
-            <div class="module-header">📋 REAL-TIME THREAT LOG - ψΩ§∞</div>
-            <div id="threatLogContent">
-                <div class="log-entry">
-                    <span class="timestamp">[INIT]</span> 
-                    <span class="threat-type">SYSTEM</span> 
-                    Mobile HackerWatch initialized - Universal protection active
-                    <span class="threat-severity severity-info">INFO</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="control-panel">
-            <button class="control-button" onclick="connectBackend()">🔗 CONNECT</button>
-            <button class="control-button" onclick="startRealTime()">⚡ START</button>
-            <button class="control-button" onclick="forceScan()">🔍 SCAN</button>
-            <button class="control-button" onclick="testConnection()">📡 TEST</button>
-            <button class="control-button danger" onclick="emergencyStop()">🛡️ STOP</button>
-            <button class="control-button" onclick="exportData()">💾 EXPORT</button>
-        </div>
-    </div>
-
-    <div class="mobile-shortcuts">
-        <div class="shortcut-btn" onclick="connectBackend()">🔗</div>
-        <div class="shortcut-btn" onclick="startRealTime()">⚡</div>
-        <div class="shortcut-btn" onclick="forceScan()">🔍</div>
-        <div class="shortcut-btn" onclick="emergencyStop()">🛡️</div>
-    </div>
-
-    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
-
-    <script>
-        let socket = null;
-        let connected = false;
-        let threatCount = 0;
-        let startTime = Date.now();
-        let threatEntries = [];
-        let isMobile = window.innerWidth <= 768 || /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent);
-
-        function sanitize(str) {
-            return str.replace(/[<>"'&]/g, c => `&#${c.charCodeAt(0)};`);
-        }
-
-        function getWebSocketURL() {
-            // Smart WebSocket URL detection
-            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const host = window.location.hostname;
-            const port = window.location.hostname === 'localhost' ? '8080' : window.location.port || '8080';
-            
-            // Try localhost first, then fall back to current host
-            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                return `ws://localhost:8080`;
-            } else {
-                return `${protocol}//${host}:${port}`;
-            }
-        }
-
-        function connectBackend() {
-            updateConnectionStatus('connecting');
-            
-            try {
-                const wsUrl = getWebSocketURL();
-                console.log('Connecting to:', wsUrl);
-                
-                socket = new WebSocket(wsUrl);
-                
-                socket.onopen = function() {
-                    connected = true;
-                    updateConnectionStatus('connected');
-                    logThreat('SYSTEM', 'Backend connection established - Universal monitoring ready', 'info');
-                    document.getElementById('connectionState').textContent = 'CONNECTED';
-                    document.getElementById('backendStatus').textContent = '📡 BACKEND: CONNECTED';
-                    
-                    if (navigator.vibrate && isMobile) {
-                        navigator.vibrate([100, 50, 100]);
-                    }
-                };
-                
-                socket.onmessage = function(event) {
-                    try {
-                        const data = JSON.parse(event.data);
-                        handleThreat(data);
-                    } catch (error) {
-                        console.error('Failed to parse message:', error);
-                    }
-                };
-                
-                socket.onclose = function(event) {
-                    connected = false;
-                    updateConnectionStatus('disconnected');
-                    document.getElementById('connectionState').textContent = 'DISCONNECTED';
-                    document.getElementById('backendStatus').textContent = '📡 BACKEND: DISCONNECTED';
-                    
-                    if (event.code === 1006) {
-                        logThreat('SYSTEM', 'Connection failed - Server may not be running', 'critical');
-                    } else {
-                        logThreat('SYSTEM', 'Connection lost - Attempting reconnection', 'critical');
-                    }
-                    
-                    // Retry connection after 5 seconds
-                    setTimeout(connectBackend, 5000);
-                };
-                
-                socket.onerror = function(error) {
-                    console.error('WebSocket error:', error);
-                    logThreat('SYSTEM', 'Connection error - Check network and server status', 'critical');
-                };
-                
-            } catch (error) {
-                console.error('Connection failed:', error);
-                updateConnectionStatus('disconnected');
-                logThreat('SYSTEM', 'Connection failed - Ensure server is running on port 8080', 'critical');
-            }
-        }
-
-        function updateConnectionStatus(status) {
-            const statusElement = document.getElementById('connectionStatus');
-            statusElement.className = `connection-status ${status}`;
-            
-            switch(status) {
-                case 'connected':
-                    statusElement.textContent = isMobile ? '🟢 MOBILE CONNECTED' : '🟢 REAL-TIME CONNECTED';
-                    break;
-                case 'connecting':
-                    statusElement.textContent = '🟡 CONNECTING...';
-                    break;
-                case 'disconnected':
-                    statusElement.textContent = isMobile ? '🔴 MOBILE OFFLINE' : '🔴 DISCONNECTED';
-                    break;
-            }
-        }
-
-        function handleThreat(data) {
-            console.log('Threat received:', data);
-            
-            threatCount++;
-            document.getElementById('threatCounter').textContent = `${threatCount} THREATS`;
-            
-            // Update LED and trigger alerts
-            const redLED = document.getElementById('redLED');
-            redLED.className = 'red-led';
-            
-            switch(data.type) {
-                case 'PINEAPPLE':
-                    redLED.classList.add('pineapple-alert');
-                    updateModuleCount('rogueCount', 'evilTwinCount');
-                    if (navigator.vibrate && isMobile) {
-                        navigator.vibrate([200, 100, 200, 100, 400]);
-                    }
-                    break;
-                case 'BLUETOOTH':
-                case 'BLUESNARFING':
-                    redLED.classList.add('bluetooth-alert');
-                    updateModuleCount('blueJackCount', 'blueSnarfCount', 'blueBugCount');
-                    if (navigator.vibrate && isMobile) {
-                        navigator.vibrate([100, 50, 100, 50, 100]);
-                    }
-                    break;
-                case 'PORTSCAN':
-                case 'INTRUSION':
-                    redLED.classList.add('intrusion-alert');
-                    updateModuleCount('portScanCount', 'arpCount', 'dnsCount');
-                    if (navigator.vibrate && isMobile) {
-                        navigator.vibrate([500, 200, 500]);
-                    }
-                    break;
-                default:
-                    if (navigator.vibrate && isMobile) {
-                        navigator.vibrate([100]);
-                    }
-            }
-            
-            // Reset LED after animation
-            setTimeout(() => {
-                redLED.className = 'red-led';
-            }, 3000);
-            
-            // Log the threat
-            logThreat(data.type, data.message, data.severity);
-            
-            // Update threat level
-            updateThreatLevel(data.severity);
-        }
-
-        function updateModuleCount(...elementIds) {
-            elementIds.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) {
-                    const currentCount = parseInt(element.textContent) || 0;
-                    element.textContent = currentCount + 1;
-                }
-            });
-        }
-
-        function updateThreatLevel(severity) {
-            const threatLevelElement = document.getElementById('threatLevel');
-            switch(severity) {
-                case 'critical':
-                    threatLevelElement.textContent = '⚡ THREAT: CRITICAL';
-                    threatLevelElement.className = 'status-critical';
-                    break;
-                case 'high':
-                    threatLevelElement.textContent = '⚡ THREAT: HIGH';
-                    threatLevelElement.className = 'status-warning';
-                    break;
-                case 'medium':
-                    threatLevelElement.textContent = '⚡ THREAT: MEDIUM';
-                    threatLevelElement.className = 'status-warning';
-                    break;
-                default:
-                    threatLevelElement.textContent = '⚡ THREAT: MINIMAL';
-                    threatLevelElement.className = 'status-secure';
-            }
-        }
-
-        function logThreat(type, message, severity) {
-            const timestamp = new Date().toLocaleTimeString();
-            const logEntry = document.createElement('div');
-            logEntry.className = 'log-entry';
-            
-            logEntry.innerHTML = `
-                <span class="timestamp">[${timestamp}]</span>
-                <span class="threat-type">${sanitize(type)}</span>
-                ${sanitize(message)}
-                <span class="threat-severity severity-${severity}">${severity.toUpperCase()}</span>
-            `;
-            
-            const logContent = document.getElementById('threatLogContent');
-            logContent.insertBefore(logEntry, logContent.firstChild);
-            
-            // Keep only last 50 entries
-            while (logContent.children.length > 50) {
-                logContent.removeChild(logContent.lastChild);
-            }
-            
-            threatEntries.unshift({
-                timestamp,
-                type,
-                message,
-                severity
-            });
-            
-            if (threatEntries.length > 100) {
-                threatEntries = threatEntries.slice(0, 100);
-            }
-        }
-
-        function startRealTime() {
-            if (!connected) {
-                logThreat('SYSTEM', 'Backend connection required for real-time monitoring', 'warning');
-                return;
-            }
-            
-            const command = {
-                command: 'start_monitoring',
-                mobile: isMobile,
-                token: 'ψΩ§∞'
-            };
-            
-            socket.send(JSON.stringify(command));
-            
-            const button = event.target;
-            button.classList.add('active');
-            button.textContent = '⚡ ACTIVE';
-            
-            logThreat('SYSTEM', 'Real-time monitoring started', 'info');
-        }
-
-        function forceScan() {
-            if (!connected) {
-                logThreat('SYSTEM', 'Backend connection required for scanning', 'warning');
-                return;
-            }
-            
-            const command = {
-                command: 'force_scan',
-                mobile: isMobile,
-                token: 'ψΩ§∞'
-            };
-            
-            socket.send(JSON.stringify(command));
-            
-            logThreat('SYSTEM', 'Force scan initiated - Checking all threat vectors', 'info');
-        }
-
-        function testConnection() {
-            if (connected) {
-                logThreat('SYSTEM', 'Connection test successful - Backend responsive', 'info');
-                if (navigator.vibrate && isMobile) {
-                    navigator.vibrate([100, 50, 100]);
-                }
-            } else {
-                logThreat('SYSTEM', 'Connection test failed - Backend not connected', 'critical');
-                connectBackend();
-            }
-        }
-
-        function emergencyStop() {
-            if (connected) {
-                const command = {
-                    command: 'emergency_stop',
-                    token: 'ψΩ§∞'
-                };
-                
-                socket.send(JSON.stringify(command));
-            }
-            
-            // Reset all counters
-            document.getElementById('rogueCount').textContent = '0';
-            document.getElementById('evilTwinCount').textContent = '0';
-            document.getElementById('blueJackCount').textContent = '0';
-            document.getElementById('blueSnarfCount').textContent = '0';
-            document.getElementById('blueBugCount').textContent = '0';
-            document.getElementById('portScanCount').textContent = '0';
-            document.getElementById('arpCount').textContent = '0';
-            document.getElementById('dnsCount').textContent = '0';
-            
-            threatCount = 0;
-            document.getElementById('threatCounter').textContent = '0 THREATS';
-            
-            // Reset buttons
-            const buttons = document.querySelectorAll('.control-button');
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent.includes('ACTIVE')) {
-                    btn.textContent = btn.textContent.replace('ACTIVE', 'START');
-                }
-            });
-            
-            logThreat('SYSTEM', 'Emergency stop activated - All systems halted', 'critical');
-            
-            if (navigator.vibrate && isMobile) {
-                navigator.vibrate([200, 100, 200, 100, 200]);
-            }
-        }
-
-        function exportData() {
-            const exportData = {
-                timestamp: new Date().toISOString(),
-                threatCount,
-                threats: threatEntries,
-                systemInfo: {
-                    userAgent: navigator.userAgent,
-                    isMobile,
-                    connected,
-                    uptime: Math.floor((Date.now() - startTime) / 1000)
-                }
-            };
-            
-            const dataStr = JSON.stringify(exportData, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = `hackerwatch-threats-${new Date().toISOString().split('T')[0]}.json`;
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            logThreat('SYSTEM', 'Threat data exported successfully', 'info');
-        }
-
-        function showThreatDetails() {
-            if (threatEntries.length === 0) {
-                logThreat('SYSTEM', 'No threat details available', 'info');
-                return;
-            }
-            
-            const recentThreats = threatEntries.slice(0, 5);
-            const details = recentThreats.map(threat => 
-                `${threat.timestamp} - ${threat.type}: ${threat.message} (${threat.severity})`
-            ).join('\n');
-            
-            if (confirm(`Recent Threats:\n\n${details}\n\nExport full threat log?`)) {
-                exportData();
-            }
-        }
-
-        // Update uptime counter
-        function updateUptime() {
-            const uptimeSeconds = Math.floor((Date.now() - startTime) / 1000);
-            const hours = Math.floor(uptimeSeconds / 3600).toString().padStart(2, '0');
-            const minutes = Math.floor((uptimeSeconds % 3600) / 60).toString().padStart(2, '0');
-            const seconds = (uptimeSeconds % 60).toString().padStart(2, '0');
-            
-            document.getElementById('uptime').textContent = `${hours}:${minutes}:${seconds}`;
-        }
-
-        // Matrix background effect
-        function initMatrixBackground() {
-            const canvas = document.getElementById('matrixCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            const matrix = "ψΩ§∞0123456789ABCDEF";
-            const drops = [];
-            
-            for (let x = 0; x < canvas.width / 10; x++) {
-                drops[x] = 1;
-            }
-            
-            function draw() {
-                ctx.fillStyle = 'rgba(10, 10, 10, 0.04)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                ctx.fillStyle = '#00ff00';
-                ctx.font = '10px Courier New';
-                
-                for (let i = 0; i < drops.length; i++) {
-                    const text = matrix[Math.floor(Math.random() * matrix.length)];
-                    ctx.fillText(text, i * 10, drops[i] * 10);
-                    
-                    if (drops[i] * 10 > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                    }
-                    drops[i]++;
-                }
-            }
-            
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                setInterval(draw, 100);
-            }
-        }
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.shiftKey) {
-                switch(e.key) {
-                    case 'C':
-                        e.preventDefault();
-                        connectBackend();
-                        break;
-                    case 'R':
-                        e.preventDefault();
-                        startRealTime();
-                        break;
-                    case 'S':
-                        e.preventDefault();
-                        forceScan();
-                        break;
-                    case 'T':
-                        e.preventDefault();
-                        testConnection();
-                        break;
-                    case 'E':
-                        e.preventDefault();
-                        emergencyStop();
-                        break;
-                    case 'X':
-                        e.preventDefault();
-                        exportData();
-                        break;
-                }
-            }
-        });
-
-        // Initialize app
-        document.addEventListener('DOMContentLoaded', function() {
-            initMatrixBackground();
-            setInterval(updateUptime, 1000);
-            
-            // Auto-connect on load
-            setTimeout(connectBackend, 1000);
-            
-            // Register service worker
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registration successful');
-                    })
-                    .catch(error => {
-                        console.log('ServiceWorker registration failed');
-                    });
-            }
-            
-            // Handle online/offline events
-            window.addEventListener('online', () => {
-                logThreat('SYSTEM', 'Network connection restored', 'info');
-                if (!connected) {
-                    connectBackend();
-                }
-            });
-            
-            window.addEventListener('offline', () => {
-                logThreat('SYSTEM', 'Network connection lost - Operating in offline mode', 'warning');
-            });
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            const canvas = document.getElementById('matrixCanvas');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
-</body>
-</html>
