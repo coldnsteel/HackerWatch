@@ -1,0 +1,102 @@
+{
+  "name": "HackerWatch Fortress Beast Mode",
+  "short_name": "HackerWatch",
+  "description": "Universal cybersecurity threat detection with payments and secure deletion - ψΩ§∞ protection",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#00ff00",
+  "background_color": "#0a0a0a",
+  "scope": "/",
+  "lang": "en",
+  "categories": [
+    "security",
+    "utilities",
+    "productivity",
+    "finance"
+  ],
+  "icons": [
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Connect Backend",
+      "short_name": "Connect",
+      "description": "Connect to HackerWatch Beast Mode backend",
+      "url": "/?action=connect",
+      "icons": [
+        {
+          "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Emergency Stop",
+      "short_name": "Emergency",
+      "description": "Emergency shutdown",
+      "url": "/?action=emergency",
+      "icons": [
+        {
+          "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Make Payment",
+      "short_name": "Payment",
+      "description": "GRSMFC Auction Credits",
+      "url": "/?action=payment",
+      "icons": [
+        {
+          "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==",
+      "sizes": "540x720",
+      "type": "image/png",
+      "platform": "narrow"
+    },
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide"
+    }
+  ],
+  "features": [
+    "Real-time threat detection",
+    "WiFi Pineapple scanning",
+    "Bluetooth security monitoring",
+    "AI-powered analysis",
+    "Secure payment processing",
+    "Email deletion",
+    "SMS deletion",
+    "Mobile-responsive design",
+    "Haptic feedback",
+    "Cross-platform compatibility"
+  ]
+}
