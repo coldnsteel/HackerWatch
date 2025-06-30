@@ -1,10 +1,10 @@
 version: '3.8'
 
 services:
-  # Main HackerWatch Fortress Application
+  # Main HackerWatch Fortress Beast Mode Application
   hackerwatch:
     build: .
-    container_name: hackerwatch-fortress
+    container_name: hackerwatch-fortress-beast
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -16,6 +16,7 @@ services:
       - SACRED_TOKEN=ψΩ§∞
     volumes:
       - ./logs:/app/logs
+      - ./temp:/app/temp
       - /etc/localtime:/etc/localtime:ro
     networks:
       - fortress-network
@@ -25,7 +26,14 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hackerwatch.rule=Host(`fortress.local`)"
+      - "traefik.http.services.hackerwatch.loadbalancer.server.port=3000"
 
 networks:
   fortress-network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
