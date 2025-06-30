@@ -10,8 +10,8 @@
     <meta name="theme-color" content="#00ff00">
     <link rel="manifest" href="manifest.json">
     
-    <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://browser.sentry-cdn.com https://www.gstatic.com; connect-src 'self' ws://localhost:8080 wss://*.herokuapp.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+    <!-- Security Headers - Fixed CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self' ws: wss: http: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
     
     <style>
         * { 
@@ -674,17 +674,33 @@
             return str.replace(/[<>"'&]/g, c => `&#${c.charCodeAt(0)};`);
         }
 
+        function getWebSocketURL() {
+            // Smart WebSocket URL detection
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const host = window.location.hostname;
+            const port = window.location.hostname === 'localhost' ? '8080' : window.location.port || '8080';
+            
+            // Try localhost first, then fall back to current host
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                return `ws://localhost:8080`;
+            } else {
+                return `${protocol}//${host}:${port}`;
+            }
+        }
+
         function connectBackend() {
             updateConnectionStatus('connecting');
             
             try {
-                const wsUrl = 'ws://localhost:8080';
+                const wsUrl = getWebSocketURL();
+                console.log('Connecting to:', wsUrl);
+                
                 socket = new WebSocket(wsUrl);
                 
                 socket.onopen = function() {
                     connected = true;
                     updateConnectionStatus('connected');
-                    logThreat('SYSTEM', 'Mobile backend connection established - Universal monitoring ready', 'info');
+                    logThreat('SYSTEM', 'Backend connection established - Universal monitoring ready', 'info');
                     document.getElementById('connectionState').textContent = 'CONNECTED';
                     document.getElementById('backendStatus').textContent = '📡 BACKEND: CONNECTED';
                     
@@ -702,25 +718,31 @@
                     }
                 };
                 
-                socket.onclose = function() {
+                socket.onclose = function(event) {
                     connected = false;
                     updateConnectionStatus('disconnected');
                     document.getElementById('connectionState').textContent = 'DISCONNECTED';
                     document.getElementById('backendStatus').textContent = '📡 BACKEND: DISCONNECTED';
-                    logThreat('SYSTEM', 'Mobile connection lost - Attempting reconnection', 'critical');
                     
+                    if (event.code === 1006) {
+                        logThreat('SYSTEM', 'Connection failed - Server may not be running', 'critical');
+                    } else {
+                        logThreat('SYSTEM', 'Connection lost - Attempting reconnection', 'critical');
+                    }
+                    
+                    // Retry connection after 5 seconds
                     setTimeout(connectBackend, 5000);
                 };
                 
                 socket.onerror = function(error) {
-                    console.error('Mobile WebSocket error:', error);
-                    logThreat('SYSTEM', 'Mobile connection error - Check network and server', 'critical');
+                    console.error('WebSocket error:', error);
+                    logThreat('SYSTEM', 'Connection error - Check network and server status', 'critical');
                 };
                 
             } catch (error) {
-                console.error('Mobile connection failed:', error);
+                console.error('Connection failed:', error);
                 updateConnectionStatus('disconnected');
-                logThreat('SYSTEM', 'Mobile connection failed - Ensure server is running', 'critical');
+                logThreat('SYSTEM', 'Connection failed - Ensure server is running on port 8080', 'critical');
             }
         }
 
