@@ -1,1 +1,31 @@
+version: '3.8'
 
+services:
+  # Main HackerWatch Fortress Application
+  hackerwatch:
+    build: .
+    container_name: hackerwatch-fortress
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - WEBSOCKET_PORT=8080
+      - SACRED_TOKEN=ψΩ§∞
+    volumes:
+      - ./logs:/app/logs
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - fortress-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  fortress-network:
+    driver: bridge
