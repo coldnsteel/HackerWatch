@@ -1,1 +1,51 @@
-
+{
+  "name": "hackerwatch-fortress",
+  "version": "2.0.0",
+  "description": "Universal mobile-responsive cybersecurity threat detection with ψΩ§∞ protection",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "enhanced": "node enhanced-server.js",
+    "test": "echo \"No tests specified\" && exit 0",
+    "docker:build": "docker build -t hackerwatch-fortress .",
+    "docker:run": "docker run -p 3000:3000 -p 8080:8080 hackerwatch-fortress",
+    "docker:compose": "docker-compose up -d",
+    "health-check": "node -e \"require('http').get('http://localhost:3000/health', (res) => { console.log('Health check:', res.statusCode === 200 ? 'OK' : 'FAIL'); process.exit(res.statusCode === 200 ? 0 : 1); });\""
+  },
+  "keywords": [
+    "cybersecurity",
+    "threat-detection",
+    "wifi-pineapple",
+    "bluetooth-security",
+    "mobile-responsive",
+    "websocket",
+    "real-time",
+    "intrusion-detection",
+    "hackerwatch",
+    "fortress",
+    "ai-powered",
+    "pwa",
+    "ψΩ§∞"
+  ],
+  "author": "GRSMFC - ψΩ§∞ Cosmic Harmony",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coldnsteel/hackerwatch-fortress.git"
+  },
+  "homepage": "https://coldnsteel.github.io/MyWebsite/",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.14.0"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "config": {
+    "port": 3000,
+    "websocket_port": 8080,
+    "sacred_token": "ψΩ§∞"
+  }
+}
