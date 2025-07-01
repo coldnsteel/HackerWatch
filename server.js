@@ -729,4 +729,4 @@ app.post('/api/emergency', async (req, res) => {
     
     console.log('🚨 Emergency lockdown activated via API!');
     
-    await logThreat('EMERGENCY', `Emergency lockdown activated via API from ${clientIP}`, 'critical
+    await logThreat('EMERGENCY', `Emergency lockdown activated via API from ${clientIP}`, 'critical', clientIP);
