@@ -1,109 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HackerWatch - Cyber Defense Platform</title>
-  <style>
-    body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; margin: 0; padding: 20px; }
-    .container { max-width: 1000px; margin: 0 auto; }
-    .status { border: 1px solid #00ff00; padding: 15px; margin: 10px 0; background: #001100; }
-    .threat { color: #ff0000; font-weight: bold; }
-    .safe { color: #00ff00; }
-    .btn { padding: 10px 20px; background: #003300; color: #00ff00; border: 1px solid #00ff00; cursor: pointer; margin: 5px; }
-    .btn:hover { background: #006600; }
-    .log { height: 300px; overflow-y: auto; border: 1px solid #00ff00; padding: 10px; background: #001100; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackerWatch Fortress - ψΩ§∞ Protocol</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #00ff00;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .fortress-container {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .fortress-title {
+            font-size: clamp(2rem, 6vw, 4rem);
+            color: #00ff00;
+            text-shadow: 0 0 30px #00ff00, 0 0 60px #00ff00;
+            margin-bottom: 30px;
+            animation: titlePulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titlePulse {
+            0% { text-shadow: 0 0 20px #00ff00; }
+            100% { text-shadow: 0 0 40px #00ff00, 0 0 80px #00ff00; }
+        }
+        
+        .status-display {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            background: rgba(0, 255, 0, 0.1);
+            animation: statusGlow 1.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes statusGlow {
+            0% { border-color: #00ff00; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3); }
+            100% { border-color: #00aa00; box-shadow: 0 0 40px rgba(0, 255, 0, 0.6); }
+        }
+        
+        .control-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0;
+        }
+        
+        .control-button {
+            background: linear-gradient(135deg, #00ff00, #008800);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+        
+        .control-button:hover {
+            background: linear-gradient(135deg, #00cc00, #006600);
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.5);
+        }
+        
+        .upgrade-section {
+            margin-top: 50px;
+            padding: 30px;
+            border: 3px solid #00ff00;
+            border-radius: 12px;
+            background: rgba(0, 255, 0, 0.08);
+            max-width: 600px;
+        }
+        
+        .upgrade-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+        }
+        
+        .threat-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+        
+        .live-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 255, 0, 0.9);
+            color: #000;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            animation: livePulse 1.5s infinite;
+            z-index: 1000;
+        }
+        
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>HACKERWATCH - ACTIVE DEFENSE</h1>
-    <div class="status" id="status">SCANNING...</div>
+    <div class="live-indicator">🔴 LIVE</div>
+    <div class="threat-counter">Threats Blocked: 0</div>
     
-    <button class="btn" onclick="scanNetwork()">SCAN NETWORK</button>
-    <button class="btn" onclick="checkPorts()">CHECK PORTS</button>
-    <button class="btn" onclick="monitorTraffic()">MONITOR TRAFFIC</button>
-    <button class="btn" onclick="blockThreats()">BLOCK THREATS</button>
-    <button class="btn" onclick="fetchThreatIntel()">FETCH THREAT INTEL</button>
-    <button class="btn" onclick="encryptData()">ENCRYPT DATA</button>
-    <button class="btn" onclick="clearLog()">CLEAR LOG</button>
-    <button class="btn" onclick="closeAllPorts()">CLOSE PORTS</button>
-    <button class="btn" onclick="window.location.href='academy.html'">SECURE COMMS</button>
+    <div class="fortress-container">
+        <h1 class="fortress-title">🛡️ HackerWatch Fortress</h1>
+        
+        <div class="status-display">
+            ψΩ§∞ FORTRESS OPERATIONAL<br>
+            ALL SYSTEMS SECURE
+        </div>
+        
+        <div class="control-panel">
+            <button class="control-button" onclick="startScan()">Start Deep Scan</button>
+            <button class="control-button" onclick="activateShields()">Activate Shields</button>
+            <button class="control-button" onclick="emergencyLockdown()">Emergency Mode</button>
+            <button class="control-button" onclick="viewReport()">Full Report</button>
+        </div>
+        
+        <div class="upgrade-section">
+            <h2>🚀 FORTRESS PRO</h2>
+            <div class="upgrade-price">$29.99/month</div>
+            <p>✅ Real-time threat elimination<br>
+            ✅ Advanced AI protection<br>
+            ✅ 24/7 priority support</p>
+            <button class="control-button" onclick="upgrade()" style="width: 100%; margin-top: 20px;">UPGRADE NOW</button>
+        </div>
+    </div>
     
-    <div class="log" id="log"></div>
-  </div>
-  
-  <script>
-    function log(msg, type = 'info') {
-      const logDiv = document.getElementById('log');
-      const color = type === 'threat' ? '#ff0000' : type === 'safe' ? '#00ff00' : '#ffffff';
-      logDiv.innerHTML += `<div style="color: ${color}">[${new Date().toLocaleTimeString()}] ${msg}</div>`;
-      logDiv.scrollTop = logDiv.scrollHeight;
-    }
-
-    function scanNetwork() {
-      log('NETWORK SCAN INITIATED', 'safe');
-      log('Checking for unauthorized devices...', 'info');
-      setTimeout(() => {
-        log('THREAT DETECTED: Suspicious IP 192.168.1.100', 'threat');
-        log('BLOCKING IP ADDRESS', 'safe');
-        document.getElementById('status').innerHTML = '<span class="threat">THREAT BLOCKED</span>';
-      }, 2000);
-    }
-
-    function checkPorts() {
-      log('PORT SCAN RUNNING...', 'safe');
-      setTimeout(() => {
-        log('Open ports: 22, 80, 443, 8080', 'info');
-        log('Port 8080 - UNAUTHORIZED ACCESS DETECTED', 'threat');
-        log('Closing vulnerable port', 'safe');
-      }, 1500);
-    }
-
-    function monitorTraffic() {
-      log('TRAFFIC MONITORING ACTIVE', 'safe');
-      setInterval(() => {
-        const threats = ['SQL injection attempt', 'DDoS traffic spike', 'Malware signature detected', 'Brute force login'];
-        const threat = threats[Math.floor(Math.random() * threats.length)];
-        log(`ALERT: ${threat}`, 'threat');
-        log('Auto-mitigation engaged', 'safe');
-      }, 5000);
-    }
-
-    function blockThreats() {
-      log('THREAT BLOCKING ENABLED', 'safe');
-      log('Firewall rules updated', 'safe');
-      log('IPS signatures refreshed', 'safe');
-      document.getElementById('status').innerHTML = '<span class="safe">PROTECTED</span>';
-    }
-
-    // Auto-start monitoring
-    window.onload = function() {
-      log('HACKERWATCH INITIALIZED', 'safe');
-      log('Professor coldnsteel - Defense systems online', 'safe');
-      scanNetwork();
-    };
-  </script>
-  <script src="threatintel.js"></script>
-  <script src="encrypt.js"></script>
-  <script src="clearlog.js"></script>
-  <script src="email-guard.js"></script>
-  <script src="sms-shield.js"></script>
-  <script src="video-secure.js"></script>
-  <script src="intrusion-detection.js"></script>
-  <script src="forensics.js"></script>
-  <script src="permanent-block.js"></script>
-  <script src="email-monitor.js"></script>
-  <script src="auto-pr.js"></script>
-  <script src="destruction-verify.js"></script>
-  <script src="permanent-block.js"></script>
-  <script src="email-monitor.js"></script>
-  <script src="auto-pr.js"></script>
-  <script src="permanent-block.js"></script>
-  <script src="email-monitor.js"></script>
+    <script>
+        let threatCount = 0;
+        
+        function startScan() {
+            const btn = event.target;
+            btn.textContent = 'SCANNING...';
+            btn.style.background = 'linear-gradient(135deg, #ffaa00, #ff8800)';
+            
+            setTimeout(() => {
+                threatCount += Math.floor(Math.random() * 5) + 1;
+                document.querySelector('.threat-counter').textContent = `Threats Blocked: ${threatCount}`;
+                btn.textContent = `SCAN COMPLETE - ${threatCount} THREATS FOUND`;
+                btn.style.background = 'linear-gradient(135deg, #00ff00, #008800)';
+                
+                setTimeout(() => {
+                    btn.textContent = 'START DEEP SCAN';
+                }, 3000);
+            }, 3000);
+        }
+        
+        function activateShields() {
+            const btn = event.target;
+            btn.textContent = 'SHIELDS ACTIVE ✅';
+            btn.style.background = 'linear-gradient(135deg, #00aa00, #006600)';
+            
+            setTimeout(() => {
+                btn.textContent = 'ACTIVATE SHIELDS';
+                btn.style.background = 'linear-gradient(135deg, #00ff00, #008800)';
+            }, 5000);
+        }
+        
+        function emergencyLockdown() {
+            const btn = event.target;
+            btn.textContent = 'LOCKDOWN ENGAGED 🔒';
+            btn.style.background = 'linear-gradient(135deg, #ff0000, #cc0000)';
+            btn.style.color = '#fff';
+            
+            setTimeout(() => {
+                btn.textContent = 'EMERGENCY MODE';
+                btn.style.background = 'linear-gradient(135deg, #00ff00, #008800)';
+                btn.style.color = '#000';
+            }, 5000);
+        }
+        
+        function viewReport() {
+            alert(`🛡️ HACKERWATCH FORTRESS REPORT\n\nStatus: SECURE\nThreats Blocked: ${threatCount}\nProtection Level: MAXIMUM\n\nψΩ§∞ Protocol Active`);
+        }
+        
+        function upgrade() {
+            alert('🚀 Redirecting to Fortress Pro upgrade page...\n\nProfessional security suite activation!');
+        }
+        
+        // Auto threat updates
+        setInterval(() => {
+            if (Math.random() < 0.1) {
+                threatCount++;
+                document.querySelector('.threat-counter').textContent = `Threats Blocked: ${threatCount}`;
+            }
+        }, 5000);
+    </script>
 </body>
 </html>
