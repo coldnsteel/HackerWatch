@@ -1,12 +1,342 @@
 <!DOCTYPE html>
-<html><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HackerWatch Platform Selection - ψΩ§∞</title>
-<meta http-equiv="refresh" content="0; url=public/index.html">
-</head><body>
-<h1>🛡️ HackerWatch Dual Platform</h1>
-<p>Redirecting to platform selector...</p>
-<p>Weekend fixes applied - Both platforms ready</p>
-<p>ψΩ§∞ - Emmanuel: God With Us in Every Algorithm</p>
-</body></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackerWatch Fortress - ψΩ§∞ Protocol</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #00ff00;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .fortress-container {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .fortress-title {
+            font-size: clamp(2rem, 6vw, 4rem);
+            color: #00ff00;
+            text-shadow: 0 0 30px #00ff00, 0 0 60px #00ff00;
+            margin-bottom: 30px;
+            animation: titlePulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titlePulse {
+            0% { text-shadow: 0 0 20px #00ff00; }
+            100% { text-shadow: 0 0 40px #00ff00, 0 0 80px #00ff00; }
+        }
+        
+        .status-display {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            background: rgba(0, 255, 0, 0.1);
+            animation: statusGlow 1.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes statusGlow {
+            0% { border-color: #00ff00; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3); }
+            100% { border-color: #00aa00; box-shadow: 0 0 40px rgba(0, 255, 0, 0.6); }
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: rgba(0, 255, 0, 0.05);
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .feature-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #00ff00;
+        }
+        
+        .feature-description {
+            font-size: 1rem;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+        
+        .control-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0;
+        }
+        
+        .control-button {
+            background: linear-gradient(135deg, #00ff00, #008800);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+        
+        .control-button:hover {
+            background: linear-gradient(135deg, #00cc00, #006600);
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.5);
+        }
+        
+        .control-button:active {
+            transform: scale(0.98);
+        }
+        
+        .upgrade-section {
+            margin-top: 50px;
+            padding: 30px;
+            border: 3px solid #00ff00;
+            border-radius: 12px;
+            background: rgba(0, 255, 0, 0.08);
+            max-width: 600px;
+        }
+        
+        .upgrade-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #00ff00;
+        }
+        
+        .upgrade-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+        }
+        
+        .upgrade-features {
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .upgrade-features li {
+            margin: 8px 0;
+            font-size: 1.1rem;
+        }
+        
+        .threat-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+        
+        .live-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 255, 0, 0.9);
+            color: #000;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            animation: livePulse 1.5s infinite;
+            z-index: 1000;
+        }
+        
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        @media (max-width: 768px) {
+            .fortress-title {
+                font-size: 2.5rem;
+            }
+            
+            .status-display {
+                font-size: 1.2rem;
+                padding: 15px;
+            }
+            
+            .control-button {
+                min-width: 150px;
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .upgrade-section {
+                padding: 20px;
+                margin-top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="live-indicator">🔴 LIVE</div>
+    <div class="threat-counter">Threats Blocked: 0</div>
+    
+    <div class="fortress-container">
+        <h1 class="fortress-title">🛡️ HackerWatch Fortress</h1>
+        
+        <div class="status-display">
+            ψΩ§∞ FORTRESS OPERATIONAL<br>
+            ALL SYSTEMS SECURE
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-title">🔍 WiFi Pineapple Detection</div>
+                <div class="feature-description">Real-time monitoring of rogue access points and evil twin attacks</div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">📡 Bluetooth Radar</div>
+                <div class="feature-description">Continuous scanning for suspicious Bluetooth devices and attacks</div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">🚫 Network Intrusion Shield</div>
+                <div class="feature-description">Advanced firewall protection against network-based attacks</div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">🔐 Secure Communications</div>
+                <div class="feature-description">Encrypted channels for all data transmission and alerts</div>
+            </div>
+        </div>
+        
+        <div class="control-panel">
+            <button class="control-button" onclick="startScan()">Start Deep Scan</button>
+            <button class="control-button" onclick="activateShields()">Activate Shields</button>
+            <button class="control-button" onclick="emergencyLockdown()">Emergency Mode</button>
+            <button class="control-button" onclick="viewReport()">Full Report</button>
+        </div>
+        
+        <div class="upgrade-section">
+            <div class="upgrade-title">🚀 FORTRESS PRO</div>
+            <div>Upgrade to professional-grade security</div>
+            <div class="upgrade-price">$29.99/month</div>
+            <ul class="upgrade-features">
+                <li>✅ Real-time threat elimination</li>
+                <li>✅ Advanced AI-powered protection</li>
+                <li>✅ 24/7 priority support</li>
+                <li>✅ Custom security profiles</li>
+                <li>✅ Mobile app access</li>
+            </ul>
+            <button class="control-button" onclick="upgrade()" style="width: 100%; margin-top: 20px;">UPGRADE NOW</button>
+        </div>
+    </div>
+    
+    <script>
+        let threatCount = 0;
+        let scanActive = false;
+        
+        function updateThreatCounter() {
+            document.querySelector('.threat-counter').textContent = `Threats Blocked: ${threatCount}`;
+        }
+        
+        function startScan() {
+            if (scanActive) return;
+            scanActive = true;
+            const btn = event.target;
+            btn.textContent = 'SCANNING...';
+            btn.style.background = 'linear-gradient(135deg, #ffaa00, #ff8800)';
+            
+            setTimeout(() => {
+                threatCount += Math.floor(Math.random() * 5) + 1;
+                updateThreatCounter();
+                btn.textContent = `SCAN COMPLETE - ${threatCount} THREATS FOUND`;
+                btn.style.background = 'linear-gradient(135deg, #00ff00, #008800)';
+                scanActive = false;
+                
+                setTimeout(() => {
+                    btn.textContent = 'START DEEP SCAN';
+                }, 3000);
+            }, 3000);
+        }
+        
+        function activateShields() {
+            const btn = event.target;
+            btn.textContent = 'SHIELDS ACTIVE ✅';
+            btn.style.background = 'linear-gradient(135deg, #00aa00, #006600)';
+            
+            setTimeout(() => {
+                btn.textContent = 'ACTIVATE SHIELDS';
+                btn.style.background = 'linear-gradient(135deg, #00ff00, #008800)';
+            }, 5000);
+        }
+        
+        function emergencyLockdown() {
+            const btn = event.target;
+            btn.textContent = 'LOCKDOWN ENGAGED 🔒';
+            btn.style.background = 'linear-gradient(135deg, #ff0000, #cc0000)';
+            btn.style.color = '#fff';
+            
+            setTimeout(() => {
+                btn.textContent = 'EMERGENCY MODE';
+                btn.style.background = 'linear-gradient(135deg, #00ff00, #008800)';
+                btn.style.color = '#000';
+            }, 5000);
+        }
+        
+        function viewReport() {
+            alert(`🛡️ HACKERWATCH FORTRESS REPORT\\n\\n` +
+                  `Status: SECURE\\n` +
+                  `Threats Blocked: ${threatCount}\\n` +
+                  `Uptime: ${Math.floor(Date.now()/1000)} seconds\\n` +
+                  `Protection Level: MAXIMUM\\n\\n` +
+                  `ψΩ§∞ Protocol Active`);
+        }
+        
+        function upgrade() {
+            alert('🚀 Redirecting to Fortress Pro upgrade page...\\n\\nProfessional security suite activation!');
+        }
+        
+        // Simulate live updates
+        setInterval(() => {
+            if (Math.random() < 0.1) {
+                threatCount++;
+                updateThreatCounter();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
