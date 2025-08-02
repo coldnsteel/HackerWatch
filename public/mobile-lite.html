@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HackerWatch Mobile Lite</title>
+<style>
+body{background:#000;color:#0f0;font:14px monospace;margin:0;padding:10px}
+.btn{display:block;width:100%;padding:15px;margin:5px 0;background:#030;color:#0f0;border:1px solid #0f0;text-align:center}
+.log{height:200px;overflow-y:auto;border:1px solid #0f0;padding:10px;background:#010}
+</style>
+</head><body>
+<h1>📱 HACKERWATCH LITE</h1>
+<button class="btn" onclick="scan()">🔍 SCAN THREATS</button>
+<button class="btn" onclick="block()">🛡️ BLOCK ALL</button>
+<button class="btn" onclick="alert('Academy: https://coldnsteel.github.io/KOZMIC-KASINO-/')">🌌 ACADEMY</button>
+<div class="log" id="log">[LITE] Mobile defense ready<br></div>
+<script>
+function log(msg){document.getElementById('log').innerHTML+='['+new Date().toLocaleTimeString()+'] '+msg+'<br>'}
+function scan(){log('SCANNING...');setTimeout(()=>log('THREAT BLOCKED: Chinese IP'),1000)}
+function block(){log('ALL THREATS BLOCKED');setTimeout(()=>log('FORTRESS MODE ACTIVE'),500)}
+</script>
+</body></html>

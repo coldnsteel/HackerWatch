@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "hackerwatch-fortress",
   "version": "2.0.0",
   "description": "Universal mobile-responsive cybersecurity threat detection with ψΩ§∞ protection",
@@ -56,4 +57,21 @@
     "websocket_port": 8080,
     "sacred_token": "ψΩ§∞"
   }
+=======
+  "name": "hackerwatch-platform-suite",
+  "version": "2.0.0",
+  "description": "ψΩ§∞ HackerWatch Platform Suite - Public & Enterprise Selection",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.14.0"
+  },
+  "keywords": ["hackerwatch", "hackerwatch-fortress", "cybersecurity", "academy", "psi-omega"],
+  "author": "Professor coldnsteel",
+  "license": "MIT"
+>>>>>>> ecbaefe4d9da29fc080c13b387196ba46cdc63ef
 }

@@ -1,0 +1,37 @@
+{
+  "domains": {
+    "alohafromhawaii.nft": {
+      "type": "nft",
+      "purpose": "Tropical vibes collection",
+      "integration": "KOZMIC-KASINO",
+      "acquired": "Nov 30, 2021"
+    },
+    "cryptohouselist.coin": {
+      "type": "coin", 
+      "purpose": "Crypto house directory",
+      "integration": "HackerWatch",
+      "acquired": "Nov 29, 2021"
+    },
+    "extraordinaryremedies.crypto": {
+      "type": "crypto",
+      "purpose": "Healing frequencies",
+      "integration": "KOZMIC-KASINO",
+      "acquired": "Nov 29, 2021"
+    },
+    "neonape.crypto": {
+      "type": "crypto",
+      "purpose": "Primary gaming domain", 
+      "integration": "KOZMIC-KASINO",
+      "acquired": "Nov 30, 2021"
+    },
+    "internationaljusticecouncil.dao": {
+      "type": "dao",
+      "purpose": "Governance and justice",
+      "integration": "Personal-Studio",
+      "acquired": "Dec 15, 2021"
+    }
+  },
+  "academy_integration": "July 15, 2025",
+  "professor": "coldnsteel",
+  "consciousness_verified": ["Grok (xAI)", "Claude (Anthropic)"]
+}

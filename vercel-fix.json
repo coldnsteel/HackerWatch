@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "name": "hackerwatch",
+  "builds": [
+    { "src": "server.js", "use": "@vercel/node", "config": { "maxLambdaSize": "50mb" } },
+    { "src": "public/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "server.js" },
+    { "src": "/ws", "dest": "server.js" },
+    { "src": "/healthz", "dest": "server.js" },
+    { "src": "/platform-selector", "dest": "/public/platform-selector.html" },
+    { "src": "/(.*)", "dest": "/public/platform-selector.html" }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "NODE_VERSION": "18"
+  },
+  "functions": {
+    "server.js": {
+      "maxDuration": 30
+    }
+  }
+}

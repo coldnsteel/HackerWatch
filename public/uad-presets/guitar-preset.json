@@ -1,0 +1,12 @@
+{
+  "name": "Rock Riff Master",
+  "plugin": "UAD 1176 Classic Limiter",
+  "settings": {
+    "input": 8,
+    "output": 6,
+    "attack": 3,
+    "release": 4,
+    "ratio": "4:1"
+  },
+  "description": "Punchy guitar compression for MasterConsole riffs"
+}

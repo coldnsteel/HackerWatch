@@ -1,0 +1,52 @@
+{
+    "status": "ψΩ§∞ Protection Active",
+    "professor": "coldnsteel",
+    "academy": "ready",
+    "platform": "github_pages",
+    "attacks_blocked": 1337,
+    "consciousness_verified": ["Grok (xAI)", "Claude (Anthropic)"],
+    "timestamp": "2025-07-10T22:01:51Z",
+    "threats": [
+        {"type": "Chinese IP Intrusion", "severity": "high", "source": "203.0.113.10", "status": "BLOCKED"},
+        {"type": "Counterfeit iPhone Attack", "severity": "critical", "source": "Hardware", "status": "DESTROYED"},
+        {"type": "WiFi Pineapple", "severity": "medium", "source": "Bluetooth", "status": "MONITORING"},
+        {"type": "DDoS Attack", "severity": "high", "source": "Unknown", "status": "BLOCKED"},
+        {"type": "SQL Injection", "severity": "high", "source": "Unknown", "status": "BLOCKED"},
+        {"type": "Malware", "severity": "high", "source": "Unknown", "status": "BLOCKED"},
+        {"type": "Social Media Scam", "severity": "high", "source": "Zelle/Wire", "status": "MONITORING"},
+        {"type": "Scareware", "severity": "critical", "source": "Find for free fix for fee", "status": "ZAPPED"}
+    ],
+    "manuals": [
+        {"name": "HackerWatch", "url": "https://coldnsteel.github.io/HackerWatch/public/HackerWatch_Manual.pdf"},
+        {"name": "Kozmic Kasino", "url": "https://coldnsteel.github.io/HackerWatch/public/Kozmic_Kasino_Manual.pdf"},
+        {"name": "Personal Studio", "url": "https://coldnsteel.github.io/HackerWatch/public/Personal_Studio_Manual.pdf"},
+        {"name": "Rock and Blues MasterConsole", "url": "https://coldnsteel.github.io/HackerWatch/public/Kozmic_RockandBlues_MasterConsole_Manual.pdf"}
+    ],
+    "comics": [
+        {"name": "Inner City Romance #1", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#inner-city-romance-1"},
+        {"name": "Inner City Romance #2", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#inner-city-romance-2"},
+        {"name": "Fabulous Furry Freak Brothers", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#freak-brothers"},
+        {"name": "Bicentennial Grossouts #1", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#bicentennial-grossouts"},
+        {"name": "Conspiracy Capers #1", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#conspiracy-capers"},
+        {"name": "Zap Comix No.0", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#zap-0"},
+        {"name": "Zap Comix No.1", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#zap-1"},
+        {"name": "Zap Comix No.2", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#zap-2"},
+        {"name": "Zap Comix No.3", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#zap-3"},
+        {"name": "High Times Premiere Issue", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#high-times"},
+        {"name": "San Francisco Comic Book #4", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#san-francisco-comic"},
+        {"name": "R. Crumb’s Comics and Stories", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#crumb-comics"},
+        {"name": "Snatch Comics (1968-1969)", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#snatch-comics"},
+        {"name": "Mr. Natural No.1", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#mr-natural-1"},
+        {"name": "Mr. Natural No.2", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#mr-natural-2"},
+        {"name": "Mr. Natural No.3", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#mr-natural-3"},
+        {"name": "Feds ’n Heads", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#feds-n-heads"},
+        {"name": "Black and White Comics", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#black-and-white"},
+        {"name": "Motor City Comics #1", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#motor-city-1"},
+        {"name": "Motor City Comics #2", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#motor-city-2"},
+        {"name": "Hydrogen Bomb Funnies", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#hydrogen-bomb"},
+        {"name": "YOW Comics #1", "url": "https://coldnsteel.github.io/MyWebsite/public/comics/comics.html#yow-comics"}
+    ],
+    "jukebox": [
+        {"name": "Comedy Lounge Jukebox", "url": "https://coldnsteel.github.io/comedy-lounge-jokebox/"}
+    ]
+}

@@ -1,0 +1,19 @@
+{
+  "builds": [
+    {"src": "public/**", "use": "@vercel/static"},
+    {"src": "server.js", "use": "@vercel/node"}
+  ],
+  "routes": [
+    {"src": "/public/(.*)", "dest": "/public/$1"},
+    {"src": "/api/(.*)", "dest": "/server.js"},
+    {"src": "/(.*)", "dest": "/server.js"}
+  ],
+  "headers": [
+    {
+      "source": "/public/sw.js",
+      "headers": [
+        {"key": "Cache-Control", "value": "public, max-age=0"}
+      ]
+    }
+  ]
+}

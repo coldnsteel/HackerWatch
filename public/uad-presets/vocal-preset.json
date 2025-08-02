@@ -1,0 +1,12 @@
+{
+  "name": "Cosmic Vocal Chain",
+  "plugin": "UAD LA-2A",
+  "settings": {
+    "gain": 4,
+    "peak_reduction": 6,
+    "mode": "compressor",
+    "attack": "fast",
+    "release": "medium"
+  },
+  "description": "Warm, analog-style vocal compression for Kozmic Kasino"
+}
