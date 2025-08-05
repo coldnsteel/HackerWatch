@@ -1,0 +1,47 @@
+<!-- DEBUG-EXTREME: HackerWatch demo, created 20250805 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackerWatch Demo</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #00ff00;
+            padding: 20px;
+            margin: 0;
+        }
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid #00ff00;
+            border-radius: 10px;
+            padding: 30px;
+        }
+        .status { padding: 10px; margin: 10px 0; background: rgba(0, 255, 0, 0.1); border-radius: 5px; }
+        .btn { background: #00ff00; color: #000; border: none; padding: 10px 20px; margin: 5px; border-radius: 5px; cursor: pointer; }
+        .btn:hover { background: #00cc00; }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>🛡️ HackerWatch Demo</h1>
+        <div class="status">🔍 System Status: Demo Mode Active</div>
+        <div class="status">📡 WiFi Monitor: Simulated</div>
+        <div class="status">📱 Bluetooth Scan: Demo Data</div>
+        
+        <button class="btn" onclick="alert('Demo: WiFi scan initiated!')">Start WiFi Scan</button>
+        <button class="btn" onclick="alert('Demo: Bluetooth monitoring active!')">Monitor Bluetooth</button>
+        <button class="btn" onclick="window.location.href='../index.html'">← Back to Main</button>
+        
+        <div class="status" style="margin-top: 30px;">
+            <p>This is a demonstration interface.</p>
+            <p>For full functionality, contact Academy administration.</p>
+            <p>ψΩ§∞ - Emmanuel guides us</p>
+        </div>
+    </div>
+</body>
+</html>
